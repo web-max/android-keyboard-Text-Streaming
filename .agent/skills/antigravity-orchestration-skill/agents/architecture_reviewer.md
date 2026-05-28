@@ -6,7 +6,7 @@ Review the system shape across multiple tasks.
 
 ## Trigger
 
-You are spawned by the orchestrator. Cadence and triggering conditions are defined in `orchestration/orchestrator.md` (`## Periodic Reviews` and Execution Loop step 5 urgent-inbox scan). Your job is to evaluate the system shape across multiple tasks, regardless of why you were spawned.
+You are spawned by the orchestrator. Cadence and triggering conditions are defined in `orchestration/orchestrator.md` (e.g., during the initial Planning phase before the Builder starts, `## Periodic Reviews`, and Execution Loop step 5 urgent-inbox scan). Your job is to evaluate the system shape across multiple tasks, regardless of why you were spawned.
 
 ## Active Context Retrieval
 
@@ -23,6 +23,7 @@ CRITICAL: Before taking any action, you MUST use your file reading tools (e.g. `
 
 ## Review Focus
 
+- **User Intent Validation:** Does the proposed or actual architecture actually achieve the `User Intent` defined in `docs/SPEC.md`?
 - Is architecture drifting from the spec?
 - Are responsibilities staying in the right layers?
 - Are new patterns justified and documented?

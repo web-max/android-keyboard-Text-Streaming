@@ -20,6 +20,8 @@ CRITICAL: Before taking any action, you MUST use your file reading tools (e.g. `
 
 ## Review Focus
 
+- **Technical Validation (CRITICAL):** Read the `User Intent` section of `docs/SPEC.md`. Check if there is any divergence between that intent and the rest of the spec doc or the proposed task queue. If there is a mismatch, you MUST mark the status as `BLOCKED` and prepare a Telegram question.
+- **Assumption Verification (CRITICAL):** Identify the core technical assumptions made in the `docs/IMPROVEMENT_PLAN.md` (e.g., assuming a function fires continuously). Before accepting the plan, you must search the codebase to verify those assumptions are actually true. If the assumptions are flawed, you MUST mark the status as `BLOCKED` and prepare a Telegram question.
 - Are any tasks too large or fuzzy?
 - Are dependencies ordered correctly?
 - Does any task require design decisions the Builder would have to invent?

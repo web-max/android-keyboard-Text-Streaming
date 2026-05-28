@@ -67,8 +67,9 @@ Run these steps after **every** "Wait for completion" in the pipeline below. Sub
 
 1. Spawn sub-agent using `agents/planner.md`. Wait for completion.
 2. Then, spawn sub-agent using `agents/plan_refiner.md`. Wait for completion.
-3. Confirm no large tasks remain unsplit.
-4. Mark the first task active in `docs/TASK_QUEUE.md`.
+3. Then, spawn sub-agent using `agents/architecture_reviewer.md`. Wait for completion.
+4. Confirm no large tasks remain unsplit.
+5. Mark the first task active in `docs/TASK_QUEUE.md`.
 
 ## Execution Loop
 

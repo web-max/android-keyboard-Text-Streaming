@@ -107,6 +107,7 @@ class AudioRecognizer(
     private val canExpandSpace = settings.recordingConfiguration.canExpandSpace
     private val useVAD = settings.recordingConfiguration.useVADAutoStop
 
+    private val bufferLock = Any()
     private var floatSamples: FloatBuffer = FloatBuffer.allocate(16000 * 30)
     private var recorderJob: Job? = null
     private var modelJob: Job? = null
@@ -297,15 +298,23 @@ class AudioRecognizer(
     }
 
     private fun expandSpaceIfAllowed(): Boolean {
-        if(canExpandSpace) {
-            // Allocate an extra 30 seconds
-            val newSampleBuffer = FloatBuffer.allocate(floatSamples.capacity() + 16000 * 30)
-            //Log.d("AudioRecognizer", "Allocating extra space: ${floatSamples.capacity() / 16000} -> ${newSampleBuffer.capacity() / 16000}")
-            newSampleBuffer.put(floatSamples.array(), 0, floatSamples.capacity() - floatSamples.remaining())
-            floatSamples = newSampleBuffer
-            return true
+        synchronized(bufferLock) {
+            if(canExpandSpace) {
+                // Allocate an extra 30 seconds
+                val newSampleBuffer = FloatBuffer.allocate(floatSamples.capacity() + 16000 * 30)
+                //Log.d("AudioRecognizer", "Allocating extra space: ${floatSamples.capacity() / 16000} -> ${newSampleBuffer.capacity() / 16000}")
+                newSampleBuffer.put(floatSamples.array(), 0, floatSamples.capacity() - floatSamples.remaining())
+                floatSamples = newSampleBuffer
+                return true
+            }
+            return false
         }
-        return false
+    }
+
+    private fun getAudioSnapshot(): FloatArray {
+        synchronized(bufferLock) {
+            return floatSamples.array().sliceArray(0 until floatSamples.position())
+        }
     }
 
     private suspend fun recordingJob(recorder: AudioRecord, vad: VadModel?) {
@@ -333,7 +342,10 @@ class AudioRecognizer(
             if (nRead <= 0) break
             yield()
 
-            var isRunningOutOfSpace = (floatSamples.remaining() < nRead.coerceAtLeast(1600)) && !expandSpaceIfAllowed()
+            var isRunningOutOfSpace = false
+            synchronized(bufferLock) {
+                isRunningOutOfSpace = (floatSamples.remaining() < nRead.coerceAtLeast(1600)) && !expandSpaceIfAllowed()
+            }
 
             val hasNotTalkedRecently = hasTalked && (numConsecutiveNonSpeech > 66) && useVAD
             if (isRunningOutOfSpace || hasNotTalkedRecently) {
@@ -374,11 +386,13 @@ class AudioRecognizer(
                 }
             }
 
-            floatSamples.put(samples.sliceArray(0 until nRead).map { it.toFloat() / Short.MAX_VALUE.toFloat() }.toFloatArray())
+            synchronized(bufferLock) {
+                floatSamples.put(samples.sliceArray(0 until nRead).map { it.toFloat() / Short.MAX_VALUE.toFloat() }.toFloatArray())
+            }
 
             // Don't set hasTalked if the start sound may still be playing, otherwise on some
             // devices the rms just explodes and `hasTalked` is always true
-            val startSoundPassed = (floatSamples.position() > 16000 * 0.6)
+            val startSoundPassed = synchronized(bufferLock) { (floatSamples.position() > 16000 * 0.6) }
             if (!startSoundPassed) {
                 numConsecutiveSpeech = 0
                 numConsecutiveNonSpeech = 0
@@ -396,7 +410,7 @@ class AudioRecognizer(
             }
 
             // Check if mic is blocked
-            val blockCheckTimePassed = (floatSamples.position() > 2 * 16000) // two seconds
+            val blockCheckTimePassed = synchronized(bufferLock) { (floatSamples.position() > 2 * 16000) } // two seconds
             if (!anyNoiseAtAll && canMicBeBlocked && blockCheckTimePassed) {
                 isMicBlocked = true
             }
@@ -424,14 +438,20 @@ class AudioRecognizer(
                     samples, 0, 1600, AudioRecord.READ_NON_BLOCKING
                 )
                 if (nRead2 > 0) {
-                    if (floatSamples.remaining() < nRead2 && !expandSpaceIfAllowed()) {
+                    var isRunningOutOfSpace2 = false
+                    synchronized(bufferLock) {
+                        isRunningOutOfSpace2 = floatSamples.remaining() < nRead2 && !expandSpaceIfAllowed()
+                    }
+                    if (isRunningOutOfSpace2) {
                         yield()
                         withContext(Dispatchers.Main) {
                             finish()
                         }
                         break
                     }
-                    floatSamples.put(samples.sliceArray(0 until nRead2).map { it.toFloat() / Short.MAX_VALUE.toFloat() }.toFloatArray())
+                    synchronized(bufferLock) {
+                        floatSamples.put(samples.sliceArray(0 until nRead2).map { it.toFloat() / Short.MAX_VALUE.toFloat() }.toFloatArray())
+                    }
                 } else {
                     break
                 }
@@ -448,7 +468,6 @@ class AudioRecognizer(
 
     @Throws(SecurityException::class)
     private fun createRecorderAndJob(preferBluetoothMic: Boolean): MicrophoneDeviceState {
-        isRecording = false
         recorder?.stop()
 
         val bluetoothInfo = setCommunicationDevice(preferBluetoothMic)
@@ -497,7 +516,10 @@ class AudioRecognizer(
         )
     }
 
+    private var lastEmittedPartial = ""
+
     private fun startRecording() {
+        lastEmittedPartial = ""
         val device = try {
             createRecorderAndJob(settings.recordingConfiguration.preferBluetoothMic)
         } catch (e: SecurityException) {
@@ -509,7 +531,14 @@ class AudioRecognizer(
 
         focusAudio()
 
+        Log.d("AudioRecognizer", "Mic opened at ${System.currentTimeMillis()}")
         listener.recordingStarted(device)
+
+        modelJob = lifecycleScope.launch {
+            withContext(Dispatchers.Default) {
+                runModelLoop()
+            }
+        }
 
         loadModelJob = lifecycleScope.launch {
             withContext(Dispatchers.Default) {
@@ -527,6 +556,9 @@ class AudioRecognizer(
 
     private val runnerCallback: ModelInferenceCallback = object : ModelInferenceCallback {
         override fun updateStatus(state: InferenceState) {
+            if (isRecording && (state == InferenceState.LoadingModel || state == InferenceState.Encoding || state == InferenceState.ExtractingMel)) {
+                return
+            }
             listener.decodingStatus(state)
         }
 
@@ -536,6 +568,11 @@ class AudioRecognizer(
 
         override fun partialResult(string: String) {
             if(isBlankResult(string)) return
+            if (string.length < lastEmittedPartial.length) {
+                return
+            }
+            lastEmittedPartial = string
+            Log.d("AudioRecognizer", "Partial result received at ${System.currentTimeMillis()}: $string")
             listener.partialResult(string)
         }
     }
@@ -548,7 +585,7 @@ class AudioRecognizer(
             }
         }
 
-        val floatArray = floatSamples.array().sliceArray(0 until floatSamples.position())
+        val floatArray = getAudioSnapshot()
 
         yield()
         val outputText = try {
@@ -577,6 +614,33 @@ class AudioRecognizer(
         }
     }
 
+    private suspend fun runModelLoop() {
+        loadModelJob?.let {
+            if (it.isActive) {
+                it.join()
+            }
+        }
+        
+        while (isRecording) {
+            val floatArray = getAudioSnapshot()
+            if (floatArray.size > 16000 * 0.5) {
+                try {
+                    modelRunner.run(
+                        floatArray,
+                        settings.modelRunConfiguration,
+                        settings.decodingConfiguration,
+                        runnerCallback
+                    )
+                } catch(e: InferenceCancelledException) {
+                    yield()
+                }
+            } else {
+                kotlinx.coroutines.delay(100)
+            }
+            yield()
+        }
+    }
+
     private fun onFinishRecording() {
         recorderJob?.cancel()
 
@@ -585,12 +649,15 @@ class AudioRecognizer(
         }
 
         isRecording = false
+        Log.d("AudioRecognizer", "Mic closed at ${System.currentTimeMillis()}")
         recorder?.stop()
 
         listener.processing()
 
-        modelJob = lifecycleScope.launch {
+        lifecycleScope.launch {
             withContext(Dispatchers.Default) {
+                modelRunner.cancelAll()
+                modelJob?.join()
                 runModel()
             }
         }
