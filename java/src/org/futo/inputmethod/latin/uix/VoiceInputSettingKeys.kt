@@ -73,3 +73,8 @@ val ANIMATE_BUBBLE = SettingsKey(
     key = booleanPreferencesKey("animate_bubble"),
     default = true
 )
+
+val STREAM_PARTIAL_TEXT = SettingsKey(
+    key = booleanPreferencesKey("stream_partial_text"),
+    default = false
+)

@@ -1,0 +1,226 @@
+Starting a Gradle Daemon, 1 busy and 1 incompatible Daemons could not be reused, use --status for details
+
+> Configure project :
+VERSION_NAME env variable not set – falling back to git describe.
+fatal: No names found, cannot describe anything.
+Failed to get version name tag from git!
+VERSION_CODE env variable not set – falling back to git rev-list.
+keystore.properties not found, APK may not be signed
+crashreporting.properties not found, crash reporting will be disabled
+BRANCH_NAME env variable not set – falling back to git branch.
+BRANCH_NAME env variable not set – falling back to git branch.
+BRANCH_NAME env variable not set – falling back to git branch.
+versionCode = 11683
+versionName = 0.0.0
+
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :prepareResFilterCore UP-TO-DATE
+> Task :prepareResFilterCore-ign UP-TO-DATE
+> Task :prepareResFilterDevbuild UP-TO-DATE
+> Task :updateLocales
+> Task :preBuild
+> Task :prePlaystoreDebugBuild
+> Task :dataBindingMergeDependencyArtifactsPlaystoreDebug UP-TO-DATE
+> Task :generatePlaystoreDebugResValues UP-TO-DATE
+> Task :generatePlaystoreDebugResources UP-TO-DATE
+> Task :voiceinput-shared:prepareResFilterVoiceinput UP-TO-DATE
+> Task :voiceinput-shared:preBuild UP-TO-DATE
+> Task :voiceinput-shared:preDebugBuild UP-TO-DATE
+> Task :voiceinput-shared:generateDebugResValues UP-TO-DATE
+> Task :voiceinput-shared:generateDebugResources UP-TO-DATE
+> Task :voiceinput-shared:packageDebugResources UP-TO-DATE
+> Task :mergePlaystoreDebugResources UP-TO-DATE
+> Task :packagePlaystoreDebugResources UP-TO-DATE
+> Task :parsePlaystoreDebugLocalResources UP-TO-DATE
+> Task :voiceinput-shared:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :voiceinput-shared:parseDebugLocalResources UP-TO-DATE
+> Task :voiceinput-shared:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :voiceinput-shared:generateDebugRFile UP-TO-DATE
+> Task :dataBindingGenBaseClassesPlaystoreDebug UP-TO-DATE
+> Task :generatePlaystoreDebugBuildConfig UP-TO-DATE
+> Task :mergePlaystoreDebugMlModels UP-TO-DATE
+> Task :generatePlaystoreDebugMlModelClass UP-TO-DATE
+> Task :voiceinput-shared:writeDebugAarMetadata UP-TO-DATE
+> Task :checkPlaystoreDebugAarMetadata UP-TO-DATE
+> Task :mapPlaystoreDebugSourceSetPaths UP-TO-DATE
+> Task :createPlaystoreDebugCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksPlaystoreDebug UP-TO-DATE
+> Task :voiceinput-shared:extractDeepLinksDebug UP-TO-DATE
+> Task :voiceinput-shared:processDebugManifest UP-TO-DATE
+> Task :processPlaystoreDebugMainManifest UP-TO-DATE
+> Task :processPlaystoreDebugManifest UP-TO-DATE
+> Task :processPlaystoreDebugManifestForPackage UP-TO-DATE
+> Task :voiceinput-shared:compileDebugLibraryResources UP-TO-DATE
+> Task :processPlaystoreDebugResources UP-TO-DATE
+> Task :voiceinput-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :voiceinput-shared:mergeDebugMlModels UP-TO-DATE
+> Task :voiceinput-shared:generateDebugMlModelClass UP-TO-DATE
+> Task :voiceinput-shared:compileDebugKotlin UP-TO-DATE
+> Task :voiceinput-shared:javaPreCompileDebug UP-TO-DATE
+> Task :voiceinput-shared:compileDebugJavaWithJavac NO-SOURCE
+> Task :voiceinput-shared:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :javaPreCompilePlaystoreDebug UP-TO-DATE
+> Task :prePlaystoreDebugUnitTestBuild
+> Task :javaPreCompilePlaystoreDebugUnitTest UP-TO-DATE
+> Task :voiceinput-shared:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :voiceinput-shared:processDebugJavaRes UP-TO-DATE
+> Task :buildKotlinToolingMetadata UP-TO-DATE
+> Task :prePlaystoreReleaseBuild
+> Task :dataBindingMergeDependencyArtifactsPlaystoreRelease UP-TO-DATE
+> Task :generatePlaystoreReleaseResValues UP-TO-DATE
+> Task :generatePlaystoreReleaseResources UP-TO-DATE
+> Task :voiceinput-shared:preReleaseBuild UP-TO-DATE
+> Task :voiceinput-shared:generateReleaseResValues UP-TO-DATE
+> Task :voiceinput-shared:generateReleaseResources UP-TO-DATE
+> Task :voiceinput-shared:packageReleaseResources UP-TO-DATE
+> Task :mergePlaystoreReleaseResources UP-TO-DATE
+> Task :packagePlaystoreReleaseResources UP-TO-DATE
+> Task :parsePlaystoreReleaseLocalResources UP-TO-DATE
+> Task :voiceinput-shared:dataBindingMergeDependencyArtifactsRelease UP-TO-DATE
+> Task :voiceinput-shared:parseReleaseLocalResources UP-TO-DATE
+> Task :voiceinput-shared:dataBindingGenBaseClassesRelease UP-TO-DATE
+> Task :voiceinput-shared:generateReleaseRFile UP-TO-DATE
+> Task :dataBindingGenBaseClassesPlaystoreRelease UP-TO-DATE
+> Task :generatePlaystoreReleaseBuildConfig UP-TO-DATE
+> Task :mergePlaystoreReleaseMlModels UP-TO-DATE
+> Task :generatePlaystoreReleaseMlModelClass UP-TO-DATE
+> Task :voiceinput-shared:writeReleaseAarMetadata UP-TO-DATE
+> Task :checkPlaystoreReleaseAarMetadata UP-TO-DATE
+> Task :mapPlaystoreReleaseSourceSetPaths UP-TO-DATE
+> Task :createPlaystoreReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksPlaystoreRelease UP-TO-DATE
+> Task :voiceinput-shared:extractDeepLinksRelease UP-TO-DATE
+> Task :voiceinput-shared:processReleaseManifest UP-TO-DATE
+> Task :processPlaystoreReleaseMainManifest UP-TO-DATE
+> Task :processPlaystoreReleaseManifest UP-TO-DATE
+> Task :processPlaystoreReleaseManifestForPackage UP-TO-DATE
+> Task :voiceinput-shared:compileReleaseLibraryResources UP-TO-DATE
+> Task :processPlaystoreReleaseResources UP-TO-DATE
+> Task :voiceinput-shared:mergeReleaseMlModels UP-TO-DATE
+> Task :voiceinput-shared:generateReleaseMlModelClass UP-TO-DATE
+> Task :voiceinput-shared:compileReleaseKotlin UP-TO-DATE
+> Task :voiceinput-shared:javaPreCompileRelease UP-TO-DATE
+> Task :voiceinput-shared:compileReleaseJavaWithJavac NO-SOURCE
+> Task :voiceinput-shared:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :compilePlaystoreDebugKotlin
+> Task :compilePlaystoreReleaseKotlin
+> Task :javaPreCompilePlaystoreRelease UP-TO-DATE
+> Task :prePlaystoreReleaseUnitTestBuild
+> Task :javaPreCompilePlaystoreReleaseUnitTest UP-TO-DATE
+> Task :voiceinput-shared:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :voiceinput-shared:processReleaseJavaRes UP-TO-DATE
+> Task :preStableDebugBuild
+> Task :dataBindingMergeDependencyArtifactsStableDebug UP-TO-DATE
+> Task :generateStableDebugResValues UP-TO-DATE
+> Task :generateStableDebugResources UP-TO-DATE
+> Task :mergeStableDebugResources UP-TO-DATE
+> Task :packageStableDebugResources UP-TO-DATE
+> Task :parseStableDebugLocalResources UP-TO-DATE
+> Task :dataBindingGenBaseClassesStableDebug UP-TO-DATE
+> Task :generateStableDebugBuildConfig UP-TO-DATE
+> Task :mergeStableDebugMlModels UP-TO-DATE
+> Task :generateStableDebugMlModelClass UP-TO-DATE
+> Task :checkStableDebugAarMetadata UP-TO-DATE
+> Task :mapStableDebugSourceSetPaths UP-TO-DATE
+> Task :createStableDebugCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksStableDebug UP-TO-DATE
+> Task :processStableDebugMainManifest UP-TO-DATE
+> Task :processStableDebugManifest UP-TO-DATE
+> Task :processStableDebugManifestForPackage UP-TO-DATE
+> Task :processStableDebugResources UP-TO-DATE
+> Task :javaPreCompileStableDebug UP-TO-DATE
+> Task :preStableDebugUnitTestBuild
+> Task :javaPreCompileStableDebugUnitTest UP-TO-DATE
+> Task :preStableReleaseBuild
+> Task :dataBindingMergeDependencyArtifactsStableRelease UP-TO-DATE
+> Task :generateStableReleaseResValues UP-TO-DATE
+> Task :generateStableReleaseResources UP-TO-DATE
+> Task :mergeStableReleaseResources UP-TO-DATE
+> Task :packageStableReleaseResources UP-TO-DATE
+> Task :parseStableReleaseLocalResources UP-TO-DATE
+> Task :dataBindingGenBaseClassesStableRelease UP-TO-DATE
+> Task :generateStableReleaseBuildConfig UP-TO-DATE
+> Task :mergeStableReleaseMlModels UP-TO-DATE
+> Task :generateStableReleaseMlModelClass UP-TO-DATE
+> Task :checkStableReleaseAarMetadata UP-TO-DATE
+> Task :mapStableReleaseSourceSetPaths UP-TO-DATE
+> Task :createStableReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksStableRelease UP-TO-DATE
+> Task :processStableReleaseMainManifest UP-TO-DATE
+> Task :processStableReleaseManifest UP-TO-DATE
+> Task :processStableReleaseManifestForPackage UP-TO-DATE
+> Task :processStableReleaseResources UP-TO-DATE
+> Task :javaPreCompileStableRelease UP-TO-DATE
+> Task :preStableReleaseUnitTestBuild
+> Task :javaPreCompileStableReleaseUnitTest UP-TO-DATE
+> Task :preUnstableDebugBuild
+> Task :dataBindingMergeDependencyArtifactsUnstableDebug UP-TO-DATE
+> Task :generateUnstableDebugResValues UP-TO-DATE
+> Task :generateUnstableDebugResources UP-TO-DATE
+> Task :mergeUnstableDebugResources UP-TO-DATE
+> Task :packageUnstableDebugResources UP-TO-DATE
+> Task :parseUnstableDebugLocalResources UP-TO-DATE
+> Task :dataBindingGenBaseClassesUnstableDebug UP-TO-DATE
+> Task :generateUnstableDebugBuildConfig UP-TO-DATE
+> Task :mergeUnstableDebugMlModels UP-TO-DATE
+> Task :generateUnstableDebugMlModelClass UP-TO-DATE
+> Task :checkUnstableDebugAarMetadata UP-TO-DATE
+> Task :mapUnstableDebugSourceSetPaths UP-TO-DATE
+> Task :createUnstableDebugCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksUnstableDebug UP-TO-DATE
+> Task :processUnstableDebugMainManifest UP-TO-DATE
+> Task :processUnstableDebugManifest UP-TO-DATE
+> Task :processUnstableDebugManifestForPackage UP-TO-DATE
+> Task :processUnstableDebugResources UP-TO-DATE
+> Task :compileUnstableDebugKotlin UP-TO-DATE
+> Task :javaPreCompileUnstableDebug UP-TO-DATE
+> Task :compileUnstableDebugJavaWithJavac UP-TO-DATE
+> Task :bundleUnstableDebugClassesToRuntimeJar UP-TO-DATE
+> Task :bundleUnstableDebugClassesToCompileJar UP-TO-DATE
+> Task :compileUnstableDebugUnitTestKotlin NO-SOURCE
+> Task :preUnstableDebugUnitTestBuild
+> Task :javaPreCompileUnstableDebugUnitTest UP-TO-DATE
+> Task :compileUnstableDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :processUnstableDebugJavaRes UP-TO-DATE
+> Task :processUnstableDebugUnitTestJavaRes NO-SOURCE
+> Task :testUnstableDebugUnitTest NO-SOURCE
+> Task :preUnstableReleaseBuild
+> Task :dataBindingMergeDependencyArtifactsUnstableRelease UP-TO-DATE
+> Task :generateUnstableReleaseResValues UP-TO-DATE
+> Task :generateUnstableReleaseResources UP-TO-DATE
+> Task :mergeUnstableReleaseResources UP-TO-DATE
+> Task :packageUnstableReleaseResources UP-TO-DATE
+> Task :parseUnstableReleaseLocalResources UP-TO-DATE
+> Task :dataBindingGenBaseClassesUnstableRelease UP-TO-DATE
+> Task :generateUnstableReleaseBuildConfig UP-TO-DATE
+> Task :mergeUnstableReleaseMlModels UP-TO-DATE
+> Task :generateUnstableReleaseMlModelClass UP-TO-DATE
+> Task :checkUnstableReleaseAarMetadata UP-TO-DATE
+> Task :mapUnstableReleaseSourceSetPaths UP-TO-DATE
+> Task :createUnstableReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :extractDeepLinksUnstableRelease UP-TO-DATE
+> Task :processUnstableReleaseMainManifest UP-TO-DATE
+> Task :processUnstableReleaseManifest UP-TO-DATE
+> Task :processUnstableReleaseManifestForPackage UP-TO-DATE
+> Task :processUnstableReleaseResources UP-TO-DATE
+> Task :javaPreCompileUnstableRelease UP-TO-DATE
+> Task :preUnstableReleaseUnitTestBuild
+> Task :javaPreCompileUnstableReleaseUnitTest UP-TO-DATE
+> Task :voiceinput-shared:preDebugUnitTestBuild UP-TO-DATE
+> Task :voiceinput-shared:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :voiceinput-shared:compileDebugUnitTestKotlin NO-SOURCE
+> Task :voiceinput-shared:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :voiceinput-shared:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :voiceinput-shared:processDebugUnitTestJavaRes NO-SOURCE
+> Task :voiceinput-shared:testDebugUnitTest NO-SOURCE
+> Task :voiceinput-shared:preReleaseUnitTestBuild UP-TO-DATE
+> Task :voiceinput-shared:generateReleaseUnitTestStubRFile UP-TO-DATE
+> Task :voiceinput-shared:compileReleaseUnitTestKotlin NO-SOURCE
+> Task :voiceinput-shared:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :voiceinput-shared:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :voiceinput-shared:processReleaseUnitTestJavaRes NO-SOURCE
+> Task :voiceinput-shared:testReleaseUnitTest NO-SOURCE
+> Task :voiceinput-shared:test UP-TO-DATE
+> Task :compileStableDebugKotlin
+> Task :compileStableReleaseKotlin
+> Task :compileUnstableReleaseKotlin

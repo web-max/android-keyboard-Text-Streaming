@@ -26,10 +26,10 @@ data class ExpandableSuggestionBarConfiguration(
 
 val NonExpandableSuggestionBar = ExpandableSuggestionBarConfiguration(false, false)
 
-class IMEHelper(
+open class IMEHelper(
     private val latinIME: LatinIME
 ) : InputMethodConnectionProvider {
-    val context: Context
+    open val context: Context
         get() = latinIME.applicationContext
 
     val lifecycleScope: LifecycleCoroutineScope
@@ -94,7 +94,7 @@ class IMEHelper(
         )
     }
 
-    fun endInputTransaction(inputTransactionIME: ActionInputTransactionIME) {
+    open fun endInputTransaction(inputTransactionIME: ActionInputTransactionIME) {
         latinIME.imeManager.endInputTransaction(inputTransactionIME)
     }
 
@@ -109,7 +109,7 @@ class IMEHelper(
      * In the future, IMEManager should probably call this automatically, but the current control
      * flow doesn't allow that
      */
-    fun requestCursorUpdate() {
+    open fun requestCursorUpdate() {
         latinIME.imeManager.ensureUpdateSelectionFinished()
     }
 

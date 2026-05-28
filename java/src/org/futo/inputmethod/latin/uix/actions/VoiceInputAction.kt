@@ -1,6 +1,7 @@
 package org.futo.inputmethod.latin.uix.actions
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import org.futo.inputmethod.latin.uix.KeyboardManagerForAction
 import org.futo.inputmethod.latin.uix.PREFER_BLUETOOTH
 import org.futo.inputmethod.latin.uix.PersistentActionState
 import org.futo.inputmethod.latin.uix.ResourceHelper
+import org.futo.inputmethod.latin.uix.STREAM_PARTIAL_TEXT
 import org.futo.inputmethod.latin.uix.USE_PERSONAL_DICT
 import org.futo.inputmethod.latin.uix.USE_VAD_AUTOSTOP
 import org.futo.inputmethod.latin.uix.VERBOSE_PROGRESS
@@ -97,7 +99,7 @@ fun NoModelInstalled(locale: Locale) {
     }
 }
 
-class VoiceInputPersistentState(val manager: KeyboardManagerForAction) : PersistentActionState {
+open class VoiceInputPersistentState(val manager: KeyboardManagerForAction) : PersistentActionState {
     val modelManager = ModelManager(manager.getContext())
     val soundPlayer = SoundPlayer(manager.getContext())
     val userDictionaryObserver = UserDictionaryObserver(manager.getContext())
@@ -112,13 +114,14 @@ class VoiceInputPersistentState(val manager: KeyboardManagerForAction) : Persist
     }
 }
 
-private class VoiceInputActionWindow(
+internal class VoiceInputActionWindow(
     val manager: KeyboardManagerForAction, val state: VoiceInputPersistentState,
     val model: ModelLoader, val locales: List<Locale>
 ) : ActionWindow(), RecognizerViewListener {
     val context = manager.getContext()
 
     private var shouldPlaySounds: Boolean = false
+    private var shouldStreamPartialText: Boolean = false
     private fun loadSettings(): RecognizerViewSettings {
         val enableSound = context.getSetting(ENABLE_SOUND)
         val verboseFeedback = false//context.getSetting(VERBOSE_PROGRESS)
@@ -129,6 +132,7 @@ private class VoiceInputActionWindow(
         val useVAD = context.getSetting(USE_VAD_AUTOSTOP)
         val usePersonalDict = context.getSetting(USE_PERSONAL_DICT)
         val animateBubble = context.getSetting(ANIMATE_BUBBLE)
+        val streamPartialText = context.getSetting(STREAM_PARTIAL_TEXT)
 
         val primaryModel = model
         val languageSpecificModels = mutableMapOf<Language, ModelLoader>()
@@ -140,6 +144,9 @@ private class VoiceInputActionWindow(
         }
 
         shouldPlaySounds = enableSound
+        shouldStreamPartialText = streamPartialText
+
+        Log.i("VoiceInputActionWindow", "Loaded STREAM_PARTIAL_TEXT setting: $streamPartialText")
 
         return RecognizerViewSettings(
             shouldShowInlinePartialResult = false,
@@ -274,6 +281,7 @@ private class VoiceInputActionWindow(
     }
 
     override fun partialResult(result: String) {
+        if (!shouldStreamPartialText) return
         manager.getLifecycleScope().launch(Dispatchers.Main) {
             val sanitized = ModelOutputSanitizer.sanitize(result, inputTransaction.textContext)
             inputTransaction.updatePartial(sanitized)

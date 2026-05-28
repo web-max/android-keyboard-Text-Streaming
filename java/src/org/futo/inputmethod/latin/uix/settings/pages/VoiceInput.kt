@@ -13,6 +13,7 @@ import org.futo.inputmethod.latin.uix.USE_PERSONAL_DICT
 import org.futo.inputmethod.latin.uix.USE_SYSTEM_VOICE_INPUT
 import org.futo.inputmethod.latin.uix.USE_VAD_AUTOSTOP
 import org.futo.inputmethod.latin.uix.VERBOSE_PROGRESS
+import org.futo.inputmethod.latin.uix.STREAM_PARTIAL_TEXT
 import org.futo.inputmethod.latin.uix.settings.NavigationItemStyle
 import org.futo.inputmethod.latin.uix.settings.UserSettingsMenu
 import org.futo.inputmethod.latin.uix.settings.useDataStoreValue
@@ -87,6 +88,12 @@ val VoiceInputMenu = UserSettingsMenu(
             title = R.string.voice_input_settings_animate_bubble,
             subtitle = R.string.voice_input_settings_animate_bubble_subtitle,
             setting = ANIMATE_BUBBLE
+        ).copy(visibilityCheck = visibilityCheckNotSystemVoiceInput),
+
+        userSettingToggleDataStore(
+            title = R.string.voice_input_settings_stream_partial_text,
+            subtitle = R.string.voice_input_settings_stream_partial_text_subtitle,
+            setting = STREAM_PARTIAL_TEXT
         ).copy(visibilityCheck = visibilityCheckNotSystemVoiceInput),
 
         userSettingNavigationItem(

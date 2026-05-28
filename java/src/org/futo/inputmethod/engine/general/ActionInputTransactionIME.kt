@@ -104,7 +104,7 @@ class ActionInputTransactionIME(val helper: IMEHelper) : IMEInterface, ActionInp
 
     override fun cancel() {
         helper.requestCursorUpdate()
-        commit(partialText)
+        commit("")
         (ic as? InputConnectionInternalComposingWrapper)?.send()
     }
 
