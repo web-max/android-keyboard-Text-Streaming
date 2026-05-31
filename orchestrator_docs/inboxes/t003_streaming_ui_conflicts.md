@@ -1,3 +1,0 @@
-## Suppress continuous LoadingModel status emissions and handle Bluetooth toggle race condition
-Severity: medium
-Body: 1) `modelRunner.run()` continuously emits `LoadingModel` and `Encoding` via `callback.updateStatus`. In T003, you must suppress or intercept these status updates while `isRecording == true` to prevent the UI from flickering back to the loading circle. 2) If the user toggles Bluetooth while recording, `createRecorderAndJob` sets `isRecording = false` temporarily, which silently kills `modelJob`. T003 must ensure the inference loop survives this device swap or properly restarts `modelJob`.
