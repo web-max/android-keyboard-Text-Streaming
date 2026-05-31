@@ -18,13 +18,13 @@ Alternatives considered: External speech APIs, analytics, telemetry, and server-
 Applies to: Voice input, transcription, logging, settings, verification, and any future model-related changes.
 Revisit when: Not expected to change for this project.
 
-### 2026-05-28 - Rewrite the Audio Pipeline for Concurrency
+### 2026-05-28 - Use the Existing Partial-Result Pipeline
 
-Decision: Re-architect `AudioRecognizer` and `MultiModelRunner` to support concurrent recording and inference, achieving true live streaming.
-Rationale: The existing pipeline is strictly sequential (record then transcribe). Live streaming requires processing audio chunks while the microphone is still recording.
-Alternatives considered: Reusing the existing sequential partial-result path was attempted but only results in a burst of text after recording finishes.
-Applies to: Voice streaming implementation, recognizer threading, and native JNI integration.
-Revisit when: Not expected to change for this project.
+Decision: Implement text streaming by enabling and safely wiring the existing partial-result path rather than creating a parallel pipeline.
+Rationale: The codebase already has partial-result callbacks through the voice recognition stack and `VoiceInputActionWindow.partialResult()` already sanitizes partial text and calls `inputTransaction.updatePartial()`.
+Alternatives considered: A new parallel streaming mechanism was ruled out because it would increase duplication and risk violating IME transaction invariants.
+Applies to: Voice streaming implementation, recognizer settings, settings UI, and verification.
+Revisit when: Only if the existing pipeline is proven defective and cannot be fixed with scoped changes.
 
 ### 2026-05-28 - Preserve the IME Transaction Contract
 
@@ -34,13 +34,13 @@ Alternatives considered: Direct `InputConnection` writes and committing partial 
 Applies to: `ActionInputTransaction`, `VoiceInputActionWindow`, cancel/close behavior, and any future streaming code.
 Revisit when: Not expected to change.
 
-### 2026-05-28 - Modify Native and JNI Boundaries as Needed
+### 2026-05-29 - Native and JNI Modifications Permitted for Optimization
 
-Decision: Modifying `WhisperGGML`, the JNI callback boundary, GGML execution, or whisper.cpp token loop IS ALLOWED to support concurrent streaming inference.
-Rationale: True live streaming requires the native model to accept streaming chunks or a sliding window of audio while recording is active.
-Alternatives considered: Attempted to avoid native changes, but the architecture strictly blocked concurrent streaming.
+Decision: We will modify `WhisperGGML`, the JNI callback boundary, and `MultiModelRunner` to pass a dynamic `decodingMode` (e.g. Greedy vs BeamSearch) and to cap `n_threads`.
+Rationale: The text-streaming feature caused a catastrophic thermal regression. The only way to fix it is to expose inference parameters (like threading and decoding strategy) dynamically through the JNI boundary so the Kotlin layer can throttle partial decodes.
+Alternatives considered: Leaving the JNI boundary fixed was attempted, but it resulted in all-core BeamSearch5 loops that melted the phone.
 Applies to: `WhisperGGML`, `MultiModelRunner`, native JNI code, and model inference behavior.
-Revisit when: Not expected to change.
+Revisit when: If inference parameters need to be abstracted further.
 
 ### 2026-05-28 - Treat Debug/Unstable APK as the Primary Build Artifact
 
