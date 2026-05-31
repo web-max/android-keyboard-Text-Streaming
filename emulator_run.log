@@ -1,0 +1,112 @@
+INFO         | Android emulator version 36.5.11.0 (build_id 15261927) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+INFO         | Found systemPath /Users/RoboUser/homebrew/share/android-commandlinetools/system-images/android-35/google_apis/arm64-v8a/
+INFO         | Increasing RAM size to 2048MB
+INFO         | Guest GLES Driver: Auto (ext controls)
+INFO         | emuglConfig_init: vulkan_mode_selected:swiftshader gles_mode_selected:swangle
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `test_emulator` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU compatibility checks are not required
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `test_emulator` are met
+INFO         | Storing crashdata in: /tmp/android-RoboUser/emu-crash-36.5.11.db, detection is enabled for process: 11183
+INFO         | Initializing gfxstream backend
+INFO         | android_startOpenglesRenderer: gpu info
+INFO         | 
+INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+INFO         | Setting ICD filenames for the loader = /Users/RoboUser/homebrew/share/android-commandlinetools/emulator/lib64/vulkan/vk_swiftshader_icd.json
+INFO         | SharedLibrary::open for [/Users/RoboUser/homebrew/share/android-commandlinetools/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib]
+INFO         | Added library: /Users/RoboUser/homebrew/share/android-commandlinetools/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib
+INFO         | Enabling Vulkan portability.
+INFO         | Selecting Vulkan device: SwiftShader Device (LLVM 10.0.0), Version: 1.3.0
+INFO         | Initializing VkEmulation features:
+INFO         |     glInteropSupported: false
+INFO         |     useDeferredCommands: true
+INFO         |     createResourceWithRequirements: true
+INFO         |     useVulkanComposition: false
+INFO         |     useVulkanNativeSwapchain: false
+INFO         |     enable guestRenderDoc: false
+INFO         |     ASTC LDR emulation mode: Gpu
+INFO         |     enable ETC2 emulation: true
+INFO         |     enable Ycbcr emulation: false
+INFO         |     guestVulkanOnly: false
+INFO         |     useDedicatedAllocations: false
+INFO         |     guestVulkanMaxApiVersion: 1.3.0
+INFO         | Graphics Adapter Vendor Google (Google Inc. (Google))
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))
+INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_draw_buffers_indexed GL_EXT_clip_cull_distance 
+INFO         | Graphics Device Extensions N/A
+INFO         | Disabling sparse binding feature support
+INFO         | Sending adb public key [QAAAAPmMFD+3ihmQ6kBf7XY+5zmyEa7bP8NBGTECy9WXL08/ihiPzuRyx6/7eWbEWkyZvC/YdM+dnchxxFs4SNrJbnlRAY3LUcpuRU1AP2slIUBSOX5it/n5wJdUA0akO99VUa1cU8DdSkwGxT015QvWWSTJpXZJjj9rj4POfjikGNQCSorWWoUkdQN/KfTqL1J/s8bvZrrAKCuXVHEf8SuU75yipUdKnti38Mb7Em6Lrvv+EAr7qFeAOgE2SUT8DUlkD3lBUmI3xEj5Gi3hWcr5Fhxvt/FbIx6kRCOulrYNy437nfEKjHqrrJ8HSCvsxOJCNNBzYl2qHXixxsxWqdJYwom6mI6sWR2IjxSjm5WajAqhTGiisEmDegVDrWCPGz6Pn/kxligCybLFayQh/d5fE6xzriDiGgShU8CqT+ZNZGjiB/ZkrSQQwmFHOdqG3sQZNDgnJchVUYSNp4lBlv+D6Nt8k9LZ18J0ddB2kcTpWzCLT+0gMp9F5IwH5suHzpsnGFGYPp1ZFbxcFiD9jd6QlRLLaDOZRAvmQzGhQY9qbB/z1IQK4lyjJaxEmW9iEwzb+zsB4pOi3YNUg5f0UxtEd+sMqa9kJ97WT9ujrTs2J2xS/GUpoQBIGMXmLkJPA0LrrwaNcfhsTLOaCoiiTbNr6KpsUZuwZEpEIZCl8FmrBtJxEX99IQEAAQA= RoboUser@unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=a003600.virtio_mmio
+INFO         |   androidboot.dalvik.vm.heapsize=512m
+INFO         |   androidboot.debug.hwui.renderer=skiagl
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.hardware.vulkan=ranchu
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=196609
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAPmMFD+3ihmQ6kBf7XY+5zmyEa7bP8NBGTECy9WXL08/ihiPzuRyx6/7eWbEWkyZvC/YdM+dnchxxFs4SNrJbnlRAY3LUcpuRU1AP2slIUBSOX5it/n5wJdUA0akO99VUa1cU8DdSkwGxT015QvWWSTJpXZJjj9rj4POfjikGNQCSorWWoUkdQN/KfTqL1J/s8bvZrrAKCuXVHEf8SuU75yipUdKnti38Mb7Em6Lrvv+EAr7qFeAOgE2SUT8DUlkD3lBUmI3xEj5Gi3hWcr5Fhxvt/FbIx6kRCOulrYNy437nfEKjHqrrJ8HSCvsxOJCNNBzYl2qHXixxsxWqdJYwom6mI6sWR2IjxSjm5WajAqhTGiisEmDegVDrWCPGz6Pn/kxligCybLFayQh/d5fE6xzriDiGgShU8CqT+ZNZGjiB/ZkrSQQwmFHOdqG3sQZNDgnJchVUYSNp4lBlv+D6Nt8k9LZ18J0ddB2kcTpWzCLT+0gMp9F5IwH5suHzpsnGFGYPp1ZFbxcFiD9jd6QlRLLaDOZRAvmQzGhQY9qbB/z1IQK4lyjJaxEmW9iEwzb+zsB4pOi3YNUg5f0UxtEd+sMqa9kJ97WT9ujrTs2J2xS/GUpoQBIGMXmLkJPA0LrrwaNcfhsTLOaCoiiTbNr6KpsUZuwZEpEIZCl8FmrBtJxEX99IQEAAQA= RoboUser@unknown
+INFO         |   androidboot.qemu.avd_name=test_emulator
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.camera_protocol_ver=1
+INFO         |   androidboot.qemu.cpuvulkan.version=4202496
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.skin=1080x2340
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR36X5X11X0
+INFO         |   androidboot.vbmeta.digest=d86517453be30669cdb7a7b57307f2ae3122a095509b92c7256b9a3665c7d025
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6720
+INFO         |   androidboot.veritymode=enforcing
+INFO         | Monitoring duration of emulator setup.
+WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO         | Using security allow list from: /Users/RoboUser/homebrew/share/android-commandlinetools/emulator/lib/emulator_access.json
+WARNING      | *** Basic token auth should only be used by android-studio ***
+INFO         | The active JSON Web Key Sets can be found here: /Users/RoboUser/Library/Caches/TemporaryItems/avd/running/11183/jwks/3a77eedc-8fe3-416d-85f7-1780bb417e51/active.jwk
+INFO         | Scanning /Users/RoboUser/Library/Caches/TemporaryItems/avd/running/11183/jwks/3a77eedc-8fe3-416d-85f7-1780bb417e51 for jwk keys.
+INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO         | Advertising in: /Users/RoboUser/Library/Caches/TemporaryItems/avd/running/pid_11183.ini
+INFO         | Successfully initialized netsim WiFi
+INFO         | Activated packet streamer for bluetooth emulation
+INFO         | Setting display: 0 configuration to: 1080x2340, dpi: 440x440 
+INFO         | setDisplayActiveConfig: id:0, 1080x2340
+INFO         | emulatorSetupEnvironment: Setting up screen background view and display layout at env:1080x2340, lcd:1080x2340
+INFO         | emulatorSetupEnvironment: Environment scene is not required
+USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+WARNING      | Failed to process .ini file /Users/RoboUser/.android/emu-update-last-check.ini for reading.
+WARNING      | Failed to process .ini file /Users/RoboUser/.android/emu-update-last-check.ini for reading.
+INFO         | Boot completed in 49635 ms
+INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+[11183:180994:20260528,210051.865800:INFO crashpad_client_mac.cc:313] restarting handler
+INFO         | Wait for emulator (pid 11183) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+[14158:234486:20260528,210052.022098:ERROR bootstrap.cc:65] bootstrap_look_up com.apple.ReportCrash: (os/kern) exception protected (32)
+USER_INFO    | Snapshots have been disabled by the user, save request is ignored.
+INFO         | Saving snapshot 'default_boot' using 1 ms
+[14160:234488:20260528,210052.105624:ERROR bootstrap.cc:65] bootstrap_check_in org.chromium.crashpad.child_port_handshake.14160.234488.ITZORLDEJMOINDEL: unknown error code (141)
+[14160:234488:20260528,210052.106493:FATAL child_port_handshake.cc:118] Check failed: server_port.is_valid(). 
+[11183:180994:20260528,210052.108737:ERROR file_io.cc:103] ReadExactly: expected 4, observed 0
+[11183:180994:20260528,210052.109872:INFO crashpad_client_mac.cc:307] restarting handler in 0.758s
+[14163:234496:20260528,210052.931597:ERROR bootstrap.cc:65] bootstrap_look_up com.apple.ReportCrash: (os/kern) exception protected (32)
+[14164:234497:20260528,210052.977936:ERROR bootstrap.cc:65] bootstrap_check_in org.chromium.crashpad.child_port_handshake.14164.234497.WLZLJCOUMUCRCPQH: unknown error code (141)
+[14164:234497:20260528,210052.978805:FATAL child_port_handshake.cc:118] Check failed: server_port.is_valid(). 
+[11183:180994:20260528,210052.980173:ERROR file_io.cc:103] ReadExactly: expected 4, observed 0
+[11183:180994:20260528,210052.981283:INFO crashpad_client_mac.cc:307] restarting handler in 0.891s
+WARNING      | Netsim Wifi localhost:53576 is gone due to CANCELLED
+[14165:234501:20260528,210053.943735:ERROR bootstrap.cc:65] bootstrap_look_up com.apple.ReportCrash: (os/kern) exception protected (32)
+[14166:234502:20260528,210053.992481:ERROR bootstrap.cc:65] bootstrap_check_in org.chromium.crashpad.child_port_handshake.14166.234502.POZGPNTEUYMZJJII: unknown error code (141)
+[14166:234502:20260528,210053.993298:FATAL child_port_handshake.cc:118] Check failed: server_port.is_valid(). 
+[11183:180994:20260528,210053.994581:ERROR file_io.cc:103] ReadExactly: expected 4, observed 0
+[11183:180994:20260528,210053.995523:INFO crashpad_client_mac.cc:307] restarting handler in 0.882s
