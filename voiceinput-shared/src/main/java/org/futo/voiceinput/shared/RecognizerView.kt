@@ -253,7 +253,7 @@ class RecognizerView(
         recognizer.reset()
     }
 
-    fun start() {
-        recognizer.start()
+    fun start(contextPrompt: String? = null) {
+        recognizer.start(contextPrompt)
     }
 }

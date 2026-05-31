@@ -78,3 +78,8 @@ val STREAM_PARTIAL_TEXT = SettingsKey(
     key = booleanPreferencesKey("stream_partial_text"),
     default = false
 )
+
+val USE_GPU_ACCELERATION = SettingsKey(
+    key = booleanPreferencesKey("use_gpu_acceleration"),
+    default = true
+)

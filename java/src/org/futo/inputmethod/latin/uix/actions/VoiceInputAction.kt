@@ -133,6 +133,7 @@ internal class VoiceInputActionWindow(
         val usePersonalDict = context.getSetting(USE_PERSONAL_DICT)
         val animateBubble = context.getSetting(ANIMATE_BUBBLE)
         val streamPartialText = context.getSetting(STREAM_PARTIAL_TEXT)
+        val useGpuAcceleration = context.getSetting(VoiceInputSettingKeys.USE_GPU_ACCELERATION)
 
         val primaryModel = model
         val languageSpecificModels = mutableMapOf<Language, ModelLoader>()
@@ -154,7 +155,8 @@ internal class VoiceInputActionWindow(
             shouldAnimateBubble = animateBubble,
             modelRunConfiguration = MultiModelRunConfiguration(
                 primaryModel = primaryModel,
-                languageSpecificModels = languageSpecificModels
+                languageSpecificModels = languageSpecificModels,
+                useGpu = useGpuAcceleration
             ),
             decodingConfiguration = DecodingConfiguration(
                 glossary = glossary,
@@ -169,6 +171,8 @@ internal class VoiceInputActionWindow(
             )
         )
     }
+
+    private var inputTransaction = manager.createInputTransaction()
 
     private var recognizerView: MutableState<RecognizerView?> = mutableStateOf(null)
     private var modelException: MutableState<ModelDoesNotExistException?> = mutableStateOf(null)
@@ -197,10 +201,22 @@ internal class VoiceInputActionWindow(
         recognizerView.reset()
 
         //yield()
-        recognizerView.start()
+        val beforeCursor = inputTransaction.textContext.beforeCursor?.toString() ?: ""
+        val prompt = if (beforeCursor.length > 200) {
+            val suffix = beforeCursor.takeLast(200)
+            val firstSpace = suffix.indexOf(' ')
+            if (firstSpace != -1) {
+                suffix.substring(firstSpace + 1)
+            } else if (suffix.isNotEmpty() && Character.isLowSurrogate(suffix[0])) {
+                suffix.substring(1)
+            } else {
+                suffix
+            }
+        } else {
+            beforeCursor
+        }
+        recognizerView.start(prompt)
     }
-
-    private var inputTransaction = manager.createInputTransaction()
 
     @Composable
     private fun ModelDownloader(modelException: ModelDoesNotExistException) {

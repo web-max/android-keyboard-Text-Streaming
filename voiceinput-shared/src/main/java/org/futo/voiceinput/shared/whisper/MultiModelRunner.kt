@@ -17,7 +17,8 @@ import org.futo.voiceinput.shared.types.toWhisperString
 
 data class MultiModelRunConfiguration(
     val primaryModel: ModelLoader,
-    val languageSpecificModels: Map<Language, ModelLoader>
+    val languageSpecificModels: Map<Language, ModelLoader>,
+    val useGpu: Boolean = false
 )
 
 data class DecodingConfiguration(
@@ -33,13 +34,13 @@ class MultiModelRunner(
         val jobs = mutableListOf<Job>()
 
         jobs.add(launch(Dispatchers.Default) {
-            modelManager.obtainModel(runConfiguration.primaryModel)
+            modelManager.obtainModel(runConfiguration.primaryModel, runConfiguration.useGpu)
         })
 
         if (runConfiguration.languageSpecificModels.count() < 2) {
             runConfiguration.languageSpecificModels.forEach {
                 jobs.add(launch(Dispatchers.Default) {
-                    modelManager.obtainModel(it.value)
+                    modelManager.obtainModel(it.value, runConfiguration.useGpu)
                 })
             }
         }
@@ -52,25 +53,32 @@ class MultiModelRunner(
         samples: FloatArray,
         runConfiguration: MultiModelRunConfiguration,
         decodingConfiguration: DecodingConfiguration,
+        prompt: String? = null,
         callback: ModelInferenceCallback
     ): String = coroutineScope {
         callback.updateStatus(InferenceState.LoadingModel)
-        val primaryModel = modelManager.obtainModel(runConfiguration.primaryModel)
+        val primaryModel = modelManager.obtainModel(runConfiguration.primaryModel, runConfiguration.useGpu)
 
         val allowedLanguages = decodingConfiguration.languages.map { it.toWhisperString() }.toTypedArray()
         val bailLanguages = runConfiguration.languageSpecificModels.filter { it.value != runConfiguration.primaryModel }.keys.map { it.toWhisperString() }.toTypedArray()
 
-        val glossary = if(decodingConfiguration.glossary.isNotEmpty()) {
+        val glossaryString = if(decodingConfiguration.glossary.isNotEmpty()) {
             "(Glossary: " + decodingConfiguration.glossary.joinToString(separator = ", ") + ")"
         } else {
             ""
+        }
+
+        val combinedPrompt = if (!prompt.isNullOrEmpty()) {
+            if (glossaryString.isNotEmpty()) "$prompt $glossaryString" else prompt
+        } else {
+            glossaryString
         }
 
         val result = try {
             callback.updateStatus(InferenceState.Encoding)
             primaryModel.infer(
                 samples = samples,
-                prompt = glossary,
+                prompt = combinedPrompt,
                 languages = allowedLanguages,
                 bailLanguages = bailLanguages,
                 decodingMode = DecodingMode.BeamSearch5,
@@ -84,11 +92,11 @@ class MultiModelRunner(
             val language = getLanguageFromWhisperString(e.language)
 
             val specificModelLoader = runConfiguration.languageSpecificModels[language]!!
-            val specificModel = modelManager.obtainModel(specificModelLoader)
+            val specificModel = modelManager.obtainModel(specificModelLoader, runConfiguration.useGpu)
 
             specificModel.infer(
                 samples = samples,
-                prompt = glossary,
+                prompt = combinedPrompt,
                 languages = arrayOf(e.language),
                 bailLanguages = arrayOf(),
                 decodingMode = DecodingMode.BeamSearch5,

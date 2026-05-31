@@ -22,13 +22,13 @@ struct WhisperModelState {
     volatile int cancel_flag = 0;
 };
 
-static jlong WhisperGGML_open(JNIEnv *env, jclass clazz, jstring model_dir) {
+static jlong WhisperGGML_open(JNIEnv *env, jclass clazz, jstring model_dir, jboolean use_gpu) {
     std::string model_dir_str = jstring2string(env, model_dir);
 
     auto *state = new WhisperModelState();
 
-    AKLOGI("Attempting to load model from file...");
-    state->context = whisper_init_from_file_with_params(model_dir_str.c_str(), { .use_gpu = false });
+    AKLOGI("Attempting to load model from file... (use_gpu=%d)", use_gpu);
+    state->context = whisper_init_from_file_with_params(model_dir_str.c_str(), { .use_gpu = (use_gpu == JNI_TRUE) });
 
     if(!state->context){
         AKLOGE("Failed to initialize whisper_context from path %s", model_dir_str.c_str());
@@ -39,14 +39,14 @@ static jlong WhisperGGML_open(JNIEnv *env, jclass clazz, jstring model_dir) {
     return reinterpret_cast<jlong>(state);
 }
 
-static jlong WhisperGGML_openFromBuffer(JNIEnv *env, jclass clazz, jobject buffer) {
+static jlong WhisperGGML_openFromBuffer(JNIEnv *env, jclass clazz, jobject buffer, jboolean use_gpu) {
     void* buffer_address = env->GetDirectBufferAddress(buffer);
     jlong buffer_capacity = env->GetDirectBufferCapacity(buffer);
 
     auto *state = new WhisperModelState();
 
-    AKLOGI("Attempting to load model from buffer...");
-    state->context = whisper_init_from_buffer_with_params(buffer_address, buffer_capacity, { .use_gpu = false });
+    AKLOGI("Attempting to load model from buffer... (use_gpu=%d)", use_gpu);
+    state->context = whisper_init_from_buffer_with_params(buffer_address, buffer_capacity, { .use_gpu = (use_gpu == JNI_TRUE) });
 
     if(!state->context){
         AKLOGE("Failed to initialize whisper_context from direct buffer");
@@ -96,7 +96,6 @@ static jstring WhisperGGML_infer(JNIEnv *env, jobject instance, jlong handle, jf
     wparams.print_special = false;
     wparams.print_timestamps = false;
     wparams.max_tokens = 256;
-    wparams.n_threads = (int)num_procs;
 
     wparams.audio_ctx = std::max(160, std::min(1500, (int)ceil((double)num_samples / (double)(320.0)) + 32));
     wparams.temperature_inc = 0.0f;
@@ -105,10 +104,12 @@ static jstring WhisperGGML_infer(JNIEnv *env, jobject instance, jlong handle, jf
     if(decoding_mode == 0) {
         wparams.strategy = WHISPER_SAMPLING_GREEDY;
         wparams.greedy.best_of = 1;
+        wparams.n_threads = std::min(4L, num_procs / 2); // Cap threads for streaming partials
     } else {
         wparams.strategy = WHISPER_SAMPLING_BEAM_SEARCH;
         wparams.beam_search.beam_size = decoding_mode;
         wparams.greedy.best_of = decoding_mode;
+        wparams.n_threads = std::min(8L, num_procs); // Full threads (capped to 8) for final pass
     }
 
 
@@ -253,12 +254,12 @@ static void WhisperGGML_cancel(JNIEnv *env, jclass clazz, jlong handle) {
 static const JNINativeMethod sMethods[] = {
         {
                 const_cast<char *>("openNative"),
-                const_cast<char *>("(Ljava/lang/String;)J"),
+                const_cast<char *>("(Ljava/lang/String;Z)J"),
                 reinterpret_cast<void *>(WhisperGGML_open)
         },
         {
                 const_cast<char *>("openFromBufferNative"),
-                const_cast<char *>("(Ljava/nio/Buffer;)J"),
+                const_cast<char *>("(Ljava/nio/Buffer;Z)J"),
                 reinterpret_cast<void *>(WhisperGGML_openFromBuffer)
         },
         {

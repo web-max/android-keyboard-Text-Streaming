@@ -115,6 +115,8 @@ class AudioRecognizer(
 
     private var focusRequest: AudioFocusRequest? = null
 
+    private var contextPrompt: String? = null
+
     private var communicationDevice = "unknown"
 
     private fun focusAudio() {
@@ -255,7 +257,8 @@ class AudioRecognizer(
         cancel()
     }
 
-    fun start() {
+    fun start(contextPrompt: String? = null) {
+        this.contextPrompt = contextPrompt
         listener.loading()
 
         if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -593,7 +596,8 @@ class AudioRecognizer(
                 floatArray,
                 settings.modelRunConfiguration,
                 settings.decodingConfiguration,
-                runnerCallback
+                prompt = contextPrompt,
+                callback = runnerCallback
             ).trim()
         }catch(e: InferenceCancelledException) {
             yield()
@@ -629,7 +633,8 @@ class AudioRecognizer(
                         floatArray,
                         settings.modelRunConfiguration,
                         settings.decodingConfiguration,
-                        runnerCallback
+                        prompt = contextPrompt,
+                        callback = runnerCallback
                     )
                 } catch(e: InferenceCancelledException) {
                     yield()
@@ -651,6 +656,7 @@ class AudioRecognizer(
         isRecording = false
         Log.d("AudioRecognizer", "Mic closed at ${System.currentTimeMillis()}")
         recorder?.stop()
+        clearCommunicationDevice()
 
         listener.processing()
 

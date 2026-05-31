@@ -96,6 +96,12 @@ val VoiceInputMenu = UserSettingsMenu(
             setting = STREAM_PARTIAL_TEXT
         ).copy(visibilityCheck = visibilityCheckNotSystemVoiceInput),
 
+        userSettingToggleDataStore(
+            title = "Enable GPU Acceleration",
+            subtitle = "Offloads Whisper inference to the Vulkan GPU backend to reduce thermal throttling.",
+            setting = org.futo.inputmethod.latin.uix.USE_GPU_ACCELERATION
+        ).copy(visibilityCheck = visibilityCheckNotSystemVoiceInput),
+
         userSettingNavigationItem(
             title = R.string.voice_input_settings_change_models,
             subtitle = R.string.voice_input_settings_change_models_subtitle,
